@@ -1,0 +1,89 @@
+.left{
+	text-align: left;
+}
+.right{
+	text-align: right;
+}
+body{
+	margin:0;
+	background-color: #e0e0e0;
+}
+nav{
+	margin: 0;
+	border-top: 100;
+	color:#fff;
+	background-color:#03a9f4;
+	width: 100%;
+	height:auto;
+	line-height: 60px;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.326), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.content
+{
+  z-index: -1;
+  top:-10;
+	height: 1000px;
+	width: 90%;
+  margin:-12px auto 0 auto;/*middle*/
+	background-color: #ffffff;
+	padding-top: 100;
+	padding-bottom: 100;
+	padding-left: 30;
+	padding-bottom: 30;
+}
+
+.card
+{
+  margin:10px;
+  width: 300px;
+  height: 300px;
+  float: left;
+	position: relative;
+	border-radius: 3px;  
+}
+
+.z-depth-1{
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
+.z-depth-2{
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+.z-depth-3{
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19); 
+  }
+.z-depth-4{
+  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+  } 
+/*
+@media only screen and (max-width: 992px) {
+  ul.side-nav {
+    position: fixed;
+    width: 240px;
+    left: -240px;
+    top: 0;
+    height: 120%;
+    background-color: #FFF;
+    z-index: 1000;
+    -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    will-change: left; }
+    ul.side-nav li {
+      float: right;
+      padding: 0 15px; }
+      ul.side-nav li:hover, ul.side-nav li.active {
+        background-color: #ddd; }
+    ul.side-nav a {
+      color: #444; }
+
+  #front-page-nav ul.side-nav li {
+    float: none;
+    padding: 0 15px; }
+    #front-page-nav ul.side-nav li:hover {
+      background-color: #ddd; }
+    #front-page-nav ul.side-nav li .active {
+      background-color: transparent; }
+  #front-page-nav ul.side-nav a {
+    color: #444; } }
+
+*/
