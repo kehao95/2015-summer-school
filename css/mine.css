@@ -203,9 +203,14 @@ img {
   .card{
     width: 90%;
   }
-  .content
-  {
-    width: 100%;
+  p,ul,li,h4,h3,h5,body,h6{
+    font-size: 25px;
+  }
+  h1{
+    font-size: 33px;
+  }
+  h2{
+    font-size: 28px;
   }
 }
 
