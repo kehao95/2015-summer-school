@@ -123,6 +123,20 @@ nav .title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: left
 }
+.card:hover,.circle:hover,.nav-links:hover{
+  position: relative;
+  left:-1px;
+  top:-2px;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.card:active,.circle:active,.nav-links:active{
+  position: relative;
+  left:-3px;
+  top:-5px;
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}
+
+
 
 .card-large h1 {
   text-align: center;
@@ -142,6 +156,9 @@ nav .title {
 
 .z-depth-4 {
   box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+.z-depth-5 {
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
 }
 
 .fixed {
