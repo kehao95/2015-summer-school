@@ -197,5 +197,10 @@ img {
   .card {
     width: 90%;
   }
+}
 
+@media screen and  (orientation: portrait){
+  .card{
+    width: 90%;
+  }
 }
