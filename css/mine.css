@@ -123,13 +123,13 @@ nav .title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: left
 }
-.card:hover,.circle:hover,.nav-links:hover{
+.card:hover,.circle:hover,.circle-large:hover,.nav-links:hover{
   position: relative;
   left:-1px;
   top:-2px;
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-.card:active,.circle:active,.nav-links:active{
+.card:active,.circle:active,.circle-large:active.nav-links:active{
   position: relative;
   left:-3px;
   top:-5px;
@@ -190,7 +190,7 @@ img {
 }
 
 .text-box {
-  float: left;
+  float: right;
   width: 100%;
   height: auto;
   padding: 10;
@@ -216,9 +216,23 @@ img {
   }
 }
 
-@media only screen and  (min-resolution: 190dpi){
+@media only screen and  (min-resolution: 190dpi) and (orientation: portrait){
+  .text-box
+  {
+    font-size: 50px;
+  }
   .card{
     width: 90%;
+  }
+  .circle
+  {
+    width:150px;
+    height: 150px;
+  }
+  .circle-large
+  {
+    width:600px;
+    height: 600px;
   }
   p,ul,li,h4,h3,h5,body,h6{
     font-size: 30px;
@@ -228,6 +242,16 @@ img {
   }
   h1{
     font-size: 50px;
+  }
+  nav .title{
+    color: transparent;
+  }
+  .nav-links
+  {
+    font-size: 50px;
+    padding: 10px;
+    width:auto;
+    height: 80px;
   }
 }
 
