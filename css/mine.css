@@ -231,8 +231,3 @@ img {
   }
 }
 
-@media only screen and  (min-resolution: 190dpi){
-  .card{
-    width: 90%;
-  }
-}
