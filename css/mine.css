@@ -216,7 +216,7 @@ img {
   }
 }
 
-@media only screen and  (min-resolution: 190dpi) and (orientation: portrait){
+@media only screen and (orientation: portrait){
   .text-box
   {
     font-size: 50px;
