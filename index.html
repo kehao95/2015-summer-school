@@ -5,6 +5,8 @@
 		<title>柯豪的主页</title>
 		<link rel="stylesheet" href="css/mine.css">
 		<link rel="stylesheet" href="css/color.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="js/mine.js" ></script>
 	</head>
 	<body>
 		<nav>
@@ -22,7 +24,7 @@
 		<div  class="content z-depth-3 bg-gray-purple-300">
 			<div class='container'>
 				<div id='Home' class="card-large bg-red-400 z-depth-3">
-					<div style='float:left;' class="circle-large z-depth-3">
+					<div style='float:left;' class="circle-large z-depth-3" onclick="photoClick()">
 						<img src="img/kehao.jpg" alt="kehao">
 					</div>
 					<div class="textbox right">
@@ -33,8 +35,8 @@
 				</div>
 			</div>
 			<div  class="container">
-
-				<div class="card bg-red-500 z-depth-1">
+				<!-- -->
+				<div class="card bg-red-500 z-depth-1" onclick="clickcard(this)">
 					<h1 id="css-margin-">CSS中margin参数省略原则</h1>
 					<p>CSS定义了几个步骤以接收少于四个的margin参数：</p>
 					<ol>
@@ -47,22 +49,31 @@
 					<p>
 					记住这个模式的好的途径是：这4个值从元素顶端开始，顺时针围绕元素。值总是按照这个顺序被使用，因此若想得到预期的效果，必须正确地排序它们。</p>
 				</div>
-				<div class="card bg-blue-500 z-depth-1">
+				<div class="card bg-blue-500 z-depth-1" onclick="clickcard(this)">
 					<h1 id="-">一点体会</h1>
 					<p>两天的时间，我从完全没有经验到写出一个自己的个人页面。其中还是收获很多。</p>
 				</div>
-				<div class="card bg-green-500 z-depth-1">
+				<div class="card bg-green-500 z-depth-1" onclick="clickcard(this)">
 					<h1 id="box-model">Box Model</h1>
 					<p>还是需要深入的理解 Box Model。虽然这个模型不是很复杂，但是如何有效的利用它进行缩进、位移、留白等还是很需要技术的。</p>
 				</div>
-				<div class="card bg-yellow-500 z-depth-1">
+				<div class="card bg-yellow-500 color-blue-200 z-depth-1" onclick="clickcard(this)">
 					<h1 id="-">卡片不能适配空间</h1>
 					<p>遇到了这样的问题，空间有大部分浪费不好看
 						我可能需要jQuery……
-						<a href="http://salvattore.com/">jQuery</a>
+						<a href="http://salvattore.com/" >jQuery</a>
 					</p>
 				</div>
-				<div class="card bg-red-500 z-depth-1">
+				<div class="card bg-red-500  z-depth-1" onclick="clickcard(this)">
+					<p>斑马菲菲被派到一个很远的地方一段时间，她给犀牛厚厚发信息抱怨：“好无聊，我要疯了，我想跳崖。”犀牛厚厚回：“我也疯了我觉得自己现在是一棵长在崖边的树。”“为什么？”“因为……我好挂住你啊……”</p>
+				</div>
+				<div class="card bg-red-500  z-depth-1" onclick="clickcard(this)">
+					<p>在狐狸阿北的酒馆，狸猫大爷喝醉了：“我年轻的时候曾经和恶龙战斗过，我们用投石车把他打哭了。”“后来呢？”“后来他就去找到另一只恶龙：我的眼睛好像进沙子了你帮我吹吹。”</p>
+				</div>
+				<div class="card bg-green-500  z-depth-1" onclick="clickcard(this)">
+					<p>小时候以为自己有魔法，无论是在树下、草地上、山谷底还是哪里睡着，都能从家里的床上醒来。可是妈妈离开了以后，这个魔法就消失了。（考拉懒懒）</p>
+				</div>
+				<div class="card bg-red-500 z-depth-1" onclick="clickcard(this)">
 					<h1 id="material-design">Material Design</h1>
 					<p>如你所见，我的页面是尝试使用Material Design风格的页面。当我决定使用这套风格的时候我在网上寻找了一些资料学习。由于不允许使用前端框架，我只好自己仿照示例进行了仿写。
 					其中Card这样一个很小的元素其实还是有很多要注意的问题的。但是当看到漂亮的成品的时候还是很高兴的。</p>
@@ -72,54 +83,116 @@
 				<card class="card-large bg-red-400">
 				<h1>作业展示区</h1>
 				<div class="container">
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work1</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work2</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work3</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work4</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work5</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Work6</h1>
 					</div>
 				</div>
 				</card>
 			</div>
 			<div id='Blog' class="container">
-				<card class="card-large bg-green-400">
+				<card class="card-large bg-green-400" >
 				<h1>博客</h1>
 				<div class="container">
-					<div class="card bg-blue-400 z-depth-1">
-						<h1>Blog Post 1</h1>
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
+						<h2 id="-">先放点故事吧</h2>
+						<p>獾是一种有强迫症的生物。
+							她今天在林子边散步刚好捡到一只，回到家小东西立刻叉腰絮叨起来了：
+							太乱！袜子两只挽在一起衬衫挂起来裙子叠好才不会有褶皱！
+							真是拿你没办法！
+							晚上她郁闷睡觉忽然感觉被窝窸窸窣窣，
+							一个小脑袋钻进她怀里，伸爪指指自己的粉鼻子：
+						说好不要乱丢东西，也把我放在正确的位置啊。</p>
+						<br>
+						<p>1
+							你有没有听说过狐狸雨。
+							传说狐狸爱上一个人，就会记住他的名字。
+							闲来无事就会在默念着，
+							放在舌尖头，牙齿上，嘴唇里，
+							他的名字啊。
+							那些名字被风一吹，就吹到云上了，
+							当云朵再也承受不住名字的重量，天空就会下起狐狸雨。
+							雨后，山坡会长出紫色的小花，
+							采一朵簪在发间，会收到心上人的告白。
+							2
+							当下起这样雨的时候，
+							狐狸红亮的毛发湿哒哒裹在身上。
+							它趴在草地上一只爪子张开，
+							雨水掉在它的爪心：
+						这滴雨水是你，嗯，这滴也是你……</p>
+						<br>
+						<p>1
+							世界上最聪明的鸟是耳鸟，最爱居住在熊的耳朵里。
+							这只熊耳朵里就有一对，
+							她们是熊的小司令官，
+							指点熊找出草丛中最隐蔽的肥兔，
+							躲开林子里枪法最准的猎人。
+							秋天来了，耳鸟送给熊一顶草编的帽子：
+							戴上它你就是林子里最好看的熊咧。
+							熊咧着嘴把草帽戴在头顶，
+							假装没有看到帽檐里几颗小小的蛋。
+							2
+							猎人进山时就发现这只熊了，
+							它走得缓慢又小心翼翼，丝毫不如传说中凶神恶煞。
+							难道它受伤了？好机会，
+							猎人举起枪。砰，熊应声缓缓而倒。
+							猎人上前，发现尸体僵直地趴倒在地上，
+							而笨重的熊脑袋上顶了个草窝，
+						里面有几颗小小的鸟蛋。</p>
+						<br>
+						<p>船的鼻子能嗅到女孩的小床，
+							船长的号角声是四的平方。
+							木屋生病，大海放羊。
+							长胡子船长的手拽着女孩发间的铃铛。
+							来，来，和我去流浪。
+							不，不行，
+							我的五年高考三年模拟还没写完，
+						被子里传来女孩无声的哭腔。</p>
+						<br>
+						<p>此时已经晚上八点，老年痴呆的妻子坐在沙发上看电视，
+							突然说要吃马蹄糕。
+							他骑着单车就出门了，道路不平，
+							他摔伤了膝盖。回到家里，
+							他大喊妻子帮他揉手肘，
+							递过一屉热腾腾的蟹黄包。
+							“你干嘛去啦？”
+							妻子疑惑地接过外套，
+							“我好像饿了，跑去买宵夜来着。”
+						他笑着说。</p>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
-						<h1>Blog Post 2</h1>
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
+						<h2 id="-">小故事</h2>
+						<p>几个顾客在狐狸阿北的酒馆里讨论在爱情里受的伤。阿北参与其中，并撩起衣服让大家看他胸口上的疤痕：“一场雷雨弄的。”“老板走开，我们在讨论爱情里受的伤，对你被雷劈没兴趣。”“是和爱情有关，那天一声雷鸣，她慌得一下奔到我怀里……慌到，忘了自己是只独角兽……”</p>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Blog Post 3</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Blog Post 4</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Blog Post 5</h1>
 					</div>
-					<div class="card bg-blue-400 z-depth-1">
+					<div class="card bg-blue-400 z-depth-1" onclick="clickcard(this)">
 						<h1>Blog Post 6</h1>
 					</div>
 				</div>
 				</card>
 			</div>
-
-
 		</div>
 	</div>
 	<div class="fixed circle bg-blue-400 z-depth-4">
