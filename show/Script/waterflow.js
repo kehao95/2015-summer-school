@@ -115,16 +115,18 @@
   };
 
   clickcard = function() {
-    var POP, card, id, url;
+    var POP, card, id, onloadPOP, url;
+    onloadPOP = function() {
+      return $('#POP').find('.card').css('display', "inline");
+    };
     id = $(this).attr('id');
     card = $("#" + id).clone();
     url = card.find('img').attr('src').replace("tumbnails", "");
-    log("url:" + url);
     card.find('img').attr('src', url);
     POP = $(document.createElement('div')).attr('id', 'POP');
     POP.append(card);
     POP.appendTo($('body'));
-    return document.getElementById('POP').addEventListener("click", clickPOP);
+    return document.getElementById('POP').addEventListener("click", clickPOP).addEventListener("onload", onloadPOP);
   };
 
   root.clickPOP = function() {

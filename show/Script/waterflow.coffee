@@ -98,15 +98,17 @@ loadPhoto =  ->
 		
 clickcard= ->
 	# log "clickcard"
+	onloadPOP = ->
+		$('#POP').find('.card').css('display',"inline")
 	id = $(this).attr('id')
 	card = $("##{id}").clone()
 	url = card.find('img').attr('src').replace("tumbnails","")
-	log "url:"+url
 	card.find('img').attr('src',url)
+
 	POP = $(document.createElement('div')).attr('id','POP')
 	POP.append(card)
 	POP.appendTo($('body'))
-	document.getElementById('POP').addEventListener("click",clickPOP)
+	document.getElementById('POP').addEventListener("click",clickPOP).addEventListener("onload",onloadPOP)
 	
 
 	# card.appendTo($('.column')[0])
