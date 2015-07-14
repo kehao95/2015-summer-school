@@ -77,14 +77,14 @@ loadPhoto =  ->
 				colAppendPhoto lastCards[i].parentNode
 	onload = ->
 			# log "onload"
-			$('body').addClass("loading"); 
+			#$('body').addClass("loading"); 
 			# log "onload done"
 	loaded = ->
 			## log "loaded"
 
 			$('.card').css("display","inline-block")
 			loadAddiction()
-			$('body').removeClass("loading"); 
+			#$('body').removeClass("loading"); 
 			## log "loaded done"
 	onload()
 	# log "append columns"
@@ -99,16 +99,20 @@ loadPhoto =  ->
 clickcard= ->
 	# log "clickcard"
 	onloadPOP = ->
-		$('#POP').find('.card').css('display',"inline")
+		log "onload"
+		log $('#POP').find('.card')
+		$('#POP').find('.card').css('opacity','1')
+
 	id = $(this).attr('id')
 	card = $("##{id}").clone()
-	url = card.find('img').attr('src').replace("tumbnails","")
-	card.find('img').attr('src',url)
-
+	img = card.find('img')
+	url = img.attr('src').replace("tumbnails","")
+	img.attr('src',url)
 	POP = $(document.createElement('div')).attr('id','POP')
-	POP.append(card)
-	POP.appendTo($('body'))
-	document.getElementById('POP').addEventListener("click",clickPOP).addEventListener("onload",onloadPOP)
+	img.bind('load',onloadPOP)
+	POP.append(card).appendTo($('body'))
+	document.getElementById('POP').addEventListener("click",clickPOP)
+	document.getElementById('POP').onload = onloadPOP
 	
 
 	# card.appendTo($('.column')[0])

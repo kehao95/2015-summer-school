@@ -97,13 +97,10 @@
       }
       return results;
     };
-    onload = function() {
-      return $('body').addClass("loading");
-    };
+    onload = function() {};
     loaded = function() {
       $('.card').css("display", "inline-block");
-      loadAddiction();
-      return $('body').removeClass("loading");
+      return loadAddiction();
     };
     onload();
     ref = $('.column');
@@ -115,18 +112,22 @@
   };
 
   clickcard = function() {
-    var POP, card, id, onloadPOP, url;
+    var POP, card, id, img, onloadPOP, url;
     onloadPOP = function() {
-      return $('#POP').find('.card').css('display', "inline");
+      log("onload");
+      log($('#POP').find('.card'));
+      return $('#POP').find('.card').css('opacity', '1');
     };
     id = $(this).attr('id');
     card = $("#" + id).clone();
-    url = card.find('img').attr('src').replace("tumbnails", "");
-    card.find('img').attr('src', url);
+    img = card.find('img');
+    url = img.attr('src').replace("tumbnails", "");
+    img.attr('src', url);
     POP = $(document.createElement('div')).attr('id', 'POP');
-    POP.append(card);
-    POP.appendTo($('body'));
-    return document.getElementById('POP').addEventListener("click", clickPOP).addEventListener("onload", onloadPOP);
+    img.bind('load', onloadPOP);
+    POP.append(card).appendTo($('body'));
+    document.getElementById('POP').addEventListener("click", clickPOP);
+    return document.getElementById('POP').onload = onloadPOP;
   };
 
   root.clickPOP = function() {
