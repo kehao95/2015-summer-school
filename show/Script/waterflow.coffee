@@ -1,6 +1,6 @@
 root = exports ? this
 root.run = -> 
-	log "ajax.run"
+	# log "ajax.run"
 
 log = -> 
 	for i in arguments
@@ -10,22 +10,31 @@ Alert = (arg...)->
 	alert arg.join('')
 
 Ajax = (filename)->
-	log "ajax()"
+	# log "ajax()"
 	ajaxloader = new XMLHttpRequest()
 	ajaxloader.open("GET","Ajax/photos.json",true)
 	ajaxloader.onreadystatechange= ->
 		if ajaxloader.readyState==4 and ajaxloader.status==200
 			root.re =  JSON.parse(ajaxloader.responseText)
-			#log "loadPhoto()"
+			`
+			var count = 0;
+			for (var k in re) {
+			    if (re.hasOwnProperty(k)) {
+			       ++count;
+			    }
+			}
+			`
+			root.re.length = count
+			## log "loadPhoto()"
 			loadPhoto()
-			#log "loadPhoto() done"
+			## log "loadPhoto() done"
 			loadPhoto()
 			loadPhoto()
-			log "$(window).scrollTop():"+$(window).scrollTop()
-			log "$(window).height():"+$(window).height()
-			log "$(document).height():"+$(document).height()
+			# log "$(window).scrollTop():"+$(window).scrollTop()
+			# log "$(window).height():"+$(window).height()
+			# log "$(document).height():"+$(document).height()
 			if ($(window).height() == $(document).height())
-				log "load to fill the screen"
+				# log "load to fill the screen"
 				loadPhoto()
 
 	ajaxloader.send()
@@ -34,6 +43,10 @@ Ajax = (filename)->
 loadPhoto =  ->
 	colAppendPhoto = (col) ->
 		# function to append a photo to a col
+		# log id+" in "+re.length
+		if id  >= re.length-1
+			# log "loaded ALL"
+			return 
 		imgsrc= re[id]['tumb']
 		cardcontent = ""
 		img = $(document.createElement('div')).addClass('image').append( $('<img />').attr('src',imgsrc)).attr('alt','id')
@@ -58,36 +71,51 @@ loadPhoto =  ->
 					buttom_of_short = divbuttom(lastCards[i])
 					top_of_long = divtop(lastCards[j])
 					if divbuttom(lastCards[i]) < divtop(lastCards[j])
-						#log "append to #{i},",i+".buttom"+':'+buttom_of_short+" < "+j+"top"+":"+top_of_long
+						## log "append to #{i},",i+".buttom"+':'+buttom_of_short+" < "+j+"top"+":"+top_of_long
 						loadI = true
 			if loadI
 				colAppendPhoto lastCards[i].parentNode
 	onload = ->
-			log "onload"
+			# log "onload"
 			$('body').addClass("loading"); 
-			log "onload done"
+			# log "onload done"
 	loaded = ->
-			log "loaded"
-			$('body').removeClass("loading"); 
+			## log "loaded"
+
 			$('.card').css("display","inline-block")
 			loadAddiction()
-			log "loaded done"
+			$('body').removeClass("loading"); 
+			## log "loaded done"
 	onload()
-	log "append columns"
+	# log "append columns"
 	for col in $('.column')
 		colAppendPhoto col
 	$('.columns').attr('onload',loaded)	
-	log "append columns Done"
+	# log "append columns Done"
 	
 
 	
 		
-clickcard = ->
-	log "clickcard"
-	log this
+clickcard= ->
+	# log "clickcard"
+	id = $(this).attr('id')
+	card = $("##{id}").clone()
+	url = card.find('img').attr('src').replace("tumbnails","")
+	log "url:"+url
+	card.find('img').attr('src',url)
+	POP = $(document.createElement('div')).attr('id','POP')
+	POP.append(card)
+	POP.appendTo($('body'))
+	document.getElementById('POP').addEventListener("click",clickPOP)
+	
+
+	# card.appendTo($('.column')[0])
+
+root.clickPOP = ->
+	$(document.getElementById('POP')).remove()
 
 scroll_to_load = ->
-	if($(window).scrollTop() + $(window).height() > $(document).height() - 5) 
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 50) 
        loadPhoto()
 
 
@@ -104,10 +132,10 @@ divtop = (div) ->
 
 window.id = 0
 window.onkeydown = ->
-	log "onkeydown"
+	# log "onkeydown"
 	loadPhoto()
 window.onresize = ->
-	log "onresize"
+	# log "onresize"
 window.onload = ->
 	Ajax "Ajax/photos.json"
 window.onscroll = ->

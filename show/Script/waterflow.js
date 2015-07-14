@@ -5,9 +5,7 @@
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
-  root.run = function() {
-    return log("ajax.run");
-  };
+  root.run = function() {};
 
   log = function() {
     var i, k, len, results;
@@ -27,20 +25,24 @@
 
   Ajax = function(filename) {
     var ajaxloader;
-    log("ajax()");
     ajaxloader = new XMLHttpRequest();
     ajaxloader.open("GET", "Ajax/photos.json", true);
     ajaxloader.onreadystatechange = function() {
       if (ajaxloader.readyState === 4 && ajaxloader.status === 200) {
         root.re = JSON.parse(ajaxloader.responseText);
+        
+			var count = 0;
+			for (var k in re) {
+			    if (re.hasOwnProperty(k)) {
+			       ++count;
+			    }
+			}
+			;
+        root.re.length = count;
         loadPhoto();
         loadPhoto();
         loadPhoto();
-        log("$(window).scrollTop():" + $(window).scrollTop());
-        log("$(window).height():" + $(window).height());
-        log("$(document).height():" + $(document).height());
         if ($(window).height() === $(document).height()) {
-          log("load to fill the screen");
           return loadPhoto();
         }
       }
@@ -52,6 +54,9 @@
     var col, colAppendPhoto, k, len, loadAddiction, loaded, onload, ref;
     colAppendPhoto = function(col) {
       var card, cardcontent, content, img, imgsrc;
+      if (id >= re.length - 1) {
+        return;
+      }
       imgsrc = re[id]['tumb'];
       cardcontent = "";
       img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
@@ -93,35 +98,41 @@
       return results;
     };
     onload = function() {
-      log("onload");
-      $('body').addClass("loading");
-      return log("onload done");
+      return $('body').addClass("loading");
     };
     loaded = function() {
-      log("loaded");
-      $('body').removeClass("loading");
       $('.card').css("display", "inline-block");
       loadAddiction();
-      return log("loaded done");
+      return $('body').removeClass("loading");
     };
     onload();
-    log("append columns");
     ref = $('.column');
     for (k = 0, len = ref.length; k < len; k++) {
       col = ref[k];
       colAppendPhoto(col);
     }
-    $('.columns').attr('onload', loaded);
-    return log("append columns Done");
+    return $('.columns').attr('onload', loaded);
   };
 
   clickcard = function() {
-    log("clickcard");
-    return log(this);
+    var POP, card, id, url;
+    id = $(this).attr('id');
+    card = $("#" + id).clone();
+    url = card.find('img').attr('src').replace("tumbnails", "");
+    log("url:" + url);
+    card.find('img').attr('src', url);
+    POP = $(document.createElement('div')).attr('id', 'POP');
+    POP.append(card);
+    POP.appendTo($('body'));
+    return document.getElementById('POP').addEventListener("click", clickPOP);
+  };
+
+  root.clickPOP = function() {
+    return $(document.getElementById('POP')).remove();
   };
 
   scroll_to_load = function() {
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 5) {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
       return loadPhoto();
     }
   };
@@ -145,13 +156,10 @@
   window.id = 0;
 
   window.onkeydown = function() {
-    log("onkeydown");
     return loadPhoto();
   };
 
-  window.onresize = function() {
-    return log("onresize");
-  };
+  window.onresize = function() {};
 
   window.onload = function() {
     return Ajax("Ajax/photos.json");
