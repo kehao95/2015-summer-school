@@ -155,9 +155,9 @@ def get_json_file(inpath,outpath,filename="photos.json"):
 # Example ######
 ################
 if __name__ == "__main__":
-	savetumbs = True
-	inpath ="/var/www/html/Images/Photos"
-	outpath  ="/var/www/html/Ajax"
+	savetumbs = False
+	inpath ="/var/www/html/show/Images/Photos"
+	outpath  ="/var/www/html/show/Ajax"
 	get_json_file(inpath,outpath)
 
 

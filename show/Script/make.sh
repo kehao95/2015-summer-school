@@ -6,4 +6,4 @@ while [ ! -f waterflow.js ]
 do
 	sleep 0.1s
 done
-google-chrome localhost
+google-chrome localhost/show

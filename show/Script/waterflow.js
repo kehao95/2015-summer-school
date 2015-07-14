@@ -41,8 +41,7 @@
         log("$(document).height():" + $(document).height());
         if ($(window).height() === $(document).height()) {
           log("load to fill the screen");
-          loadPhoto();
-          return sleep;
+          return loadPhoto();
         }
       }
     };
@@ -50,47 +49,70 @@
   };
 
   loadPhoto = function() {
-    var Ncol, buttom_of_short, col, colAppendPhoto, i, j, k, l, lastCards, len, loadI, m, ref, ref1, ref2, results, top_of_long;
-    Ncol = $('.column').length;
+    var col, colAppendPhoto, k, len, loadAddiction, loaded, onload, ref;
     colAppendPhoto = function(col) {
       var card, cardcontent, content, img, imgsrc;
       imgsrc = re[id]['tumb'];
       cardcontent = "";
-      img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc));
+      img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
       if (cardcontent === !"") {
         content = $(document.createElement('div')).addClass('cardcontent').append($('<p />')).append(cardcontent);
       } else {
         content = null;
       }
       card = $(document.createElement('div')).addClass('card').append(img).append(content).attr('id', 'img_' + id).bind("click", clickcard);
+      card.css("display", "none");
       card.appendTo(col);
       return id += 1;
     };
+    loadAddiction = function() {
+      var Ncol, buttom_of_short, i, j, k, l, lastCards, loadI, ref, ref1, results, top_of_long;
+      Ncol = $('.column').length;
+      lastCards = $('.column .card:last-child');
+      if (lastCards === []) {
+        return;
+      }
+      results = [];
+      for (i = k = 0, ref = Ncol - 1; 0 <= ref ? k <= ref : k >= ref; i = 0 <= ref ? ++k : --k) {
+        loadI = false;
+        for (j = l = 0, ref1 = Ncol - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; j = 0 <= ref1 ? ++l : --l) {
+          if (i !== j) {
+            buttom_of_short = divbuttom(lastCards[i]);
+            top_of_long = divtop(lastCards[j]);
+            if (divbuttom(lastCards[i]) < divtop(lastCards[j])) {
+              loadI = true;
+            }
+          }
+        }
+        if (loadI) {
+          results.push(colAppendPhoto(lastCards[i].parentNode));
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    };
+    onload = function() {
+      log("onload");
+      $('body').addClass("loading");
+      return log("onload done");
+    };
+    loaded = function() {
+      log("loaded");
+      $('body').removeClass("loading");
+      $('.card').css("display", "inline-block");
+      loadAddiction();
+      return log("loaded done");
+    };
+    onload();
+    log("append columns");
     ref = $('.column');
     for (k = 0, len = ref.length; k < len; k++) {
       col = ref[k];
       colAppendPhoto(col);
     }
-    lastCards = $('.column .card:last-child');
-    results = [];
-    for (i = l = 0, ref1 = Ncol - 1; 0 <= ref1 ? l <= ref1 : l >= ref1; i = 0 <= ref1 ? ++l : --l) {
-      loadI = false;
-      for (j = m = 0, ref2 = Ncol - 1; 0 <= ref2 ? m <= ref2 : m >= ref2; j = 0 <= ref2 ? ++m : --m) {
-        if (i !== j) {
-          buttom_of_short = divbuttom(lastCards[i]);
-          top_of_long = divtop(lastCards[j]);
-          if (divbuttom(lastCards[i]) <= divtop(lastCards[j])) {
-            loadI = true;
-          }
-        }
-      }
-      if (loadI) {
-        results.push(colAppendPhoto(lastCards[i].parentNode));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
+    $('.columns').attr('onload', loaded);
+    return log("append columns Done");
   };
 
   clickcard = function() {
@@ -99,17 +121,25 @@
   };
 
   scroll_to_load = function() {
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 5) {
       return loadPhoto();
     }
   };
 
   divbuttom = function(div) {
-    return $(div).position().top + $(div).height();
+    if (div === void 0) {
+      return 100;
+    } else {
+      return $(div).position().top + $(div).height();
+    }
   };
 
   divtop = function(div) {
-    return $(div).position().top;
+    if (div === void 0) {
+      return 0;
+    } else {
+      return $(div).position().top;
+    }
   };
 
   window.id = 0;
