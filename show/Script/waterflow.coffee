@@ -75,6 +75,7 @@ loadPhoto =  ->
 				$.ajax({url:Url,dataType:'json',index:id,success:function(data){
 				log(data.status)
 				log(data.results[1].formatted_address)
+				addr = data.results[1].formatted_address
 				$("#img_"+this.index).append("<p>"+data.results[1].formatted_address+"</p>")
 				}})
 				`
