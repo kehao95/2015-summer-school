@@ -5,11 +5,14 @@ root.run = ->
 log = -> 
 	for i in arguments
 		console.log i
-
 Alert = (arg...)->
 	alert arg.join('')
+AjaxSync = (url)->
+	$.ajax(url,async = false,)
 
-Ajax = (filename)->
+
+
+initLoad = (filename)->
 	# log "ajax()"
 	ajaxloader = new XMLHttpRequest()
 	ajaxloader.open("GET","Ajax/photos.json",true)
@@ -38,31 +41,39 @@ Ajax = (filename)->
 				loadPhoto()
 
 	ajaxloader.send()
-
-
+foo = false
 loadPhoto =  ->
+	distence =(pos1, pos2) ->
+      pi = 3.141592654;
+      cos = Math.cos;
+      sin = Math.sin;
+      arccos = Math.acos;
+      return 6370.996*arccos(cos(pos1.latitude*pi/180 )*cos(pos2.latitude*pi/180)*cos(pos1.longitude*pi/180 -pos2.longitude*pi/180)+sin(pos1.latitude*pi/180 )*sin(pos2.latitude*pi/180));
+
 	loaded = ->
 			$('.card').css("display","inline-block")
-			$("body").css("overflow", "auto")
+			#$("body").css("overflow", "auto")
 			loadAddiction()
 
 	colAppendPhoto = (col) ->
 		# function to append a photo to a col
 		# log id+" in "+re.length
-		foo = false
 		if id  >= re.length-1 and foo == false
 			foo = true
+			loaded()
 			Alert "loaded all"
 			return 
 		log "load"
 		imgsrc= re[id]['tumb']
-		cardcontent = ""
+		pos = {}
+		pos.latitude = re[id].latitude
+		pos.longitude = re[id].longitude
+		if pos.longitude != null
+			content = "<p>距此 #{distence(pos,position).toFixed(1)}km</p>"
+		else
+			content = "<p>无地理信息</p>"
 		img = $(document.createElement('div')).addClass('image').append( $('<img />').attr('src',imgsrc)).attr('alt','id')
 		img.bind('load',onload)
-		if cardcontent is not ""
-			content = $(document.createElement('div')).addClass('cardcontent').append( $('<p />')).append(cardcontent)
-		else
-			content = null
 		card = $(document.createElement('div')).addClass('card').append(img).append(content).attr('id','img_'+id).bind( "click", clickcard)
 		card.css("display","none")
 		card.appendTo(col)
@@ -87,21 +98,20 @@ loadPhoto =  ->
 
 	# onload()
 	log "append columns"
-	$("body").css("overflow", "hidden")
+	#$("body").css("overflow", "hidden")
 	for col in $('.column')
 		colAppendPhoto col
 	$('.columns').attr('onload',loaded)	
 	# log "append columns Done"
-	
 
-	
-		
 clickcard= ->
 	# log "clickcard"
+	commentspage = 1
 	copyCardWithImage = (id) ->
 		card = $("##{id}").clone()
 		log card
 		img = card.find('img').attr('src',card.find('img').attr('src').replace("tumbnails","")).bind('load',onloadPOP)
+		card.find('p').remove()
 		card
 	newCommentBox = ->
 		return $(document.createElement('div')).addClass('commentBox')
@@ -121,13 +131,13 @@ clickcard= ->
 		$('#POP').find('.card').css('opacity','1')
 	clickloadMore = (event)->
 		event.stopPropagation()
-		comment = newComment('kehao',"已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。")
-		$('.commentBox').append(comment)
+		loadComments()
+		#comment = newComment('kehao',"已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。")
+		#$('.commentBox').append(comment)
 
 	loadCard =(id) ->
 		card = copyCardWithImage(id)
-		comment = newComment('kehao',"已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。")
-		commentBox = newCommentBox().append(comment).append(comment)
+		commentBox = newCommentBox()
 		loadMore = newLoadMore()
 		comments = newComments().append(commentBox)
 		comments.append(loadMore)
@@ -136,6 +146,7 @@ clickcard= ->
 		document.getElementById('POP').addEventListener("click",clickPOP)
 		document.getElementById('LoadMore').addEventListener("click",clickloadMore)
 		document.getElementById('POP').onload = onloadPOP
+		loadComments()
 
 	loadingGIF =->
 		lo = document.createElement('div')
@@ -143,6 +154,28 @@ clickcard= ->
 		gif = $(document.createElement('img')).attr('src','Images/loading.gif')
 		$(lo).append(gif).append('<p>正在努力加载中...</p>')
 		$('#POP').append(lo)
+
+
+	page = 0
+	loadComments =->
+		success =(data,other...)->
+			if page >= 3
+				$('#LoadMore').text("[没有更多]")
+				#document.getElementById('LoadMore').removeEventListener("click",clickloadMore)
+			i = 0
+			while data.hasOwnProperty(i)
+				log "data[i]",data[i]
+				comment = newComment(data[i].author,data[i].comment)
+				log "comment",comment
+				$('.commentBox').append(comment)
+				i++
+			page++
+
+		file = "comment_#{page}.json"
+		Url = "Ajax/"+file
+		$.ajax(url:Url,dataType= 'json',).done(success)
+		
+
 
 	id = $(this).attr('id')
 	POP = $(document.createElement('div')).attr('id','POP').appendTo($('body'))
@@ -158,8 +191,6 @@ root.clickPOP = ->
 scroll_to_load = ->
 	if($(window).scrollTop() + $(window).height() > $(document).height() - 50) 
        loadPhoto()
-
-
 divbuttom = (div)->
 		if div == undefined
 			return 100
@@ -171,6 +202,21 @@ divtop = (div) ->
 	else
 		$(div).position().top
 
+getPosition = ->
+	success = (pos) ->
+		position.latitude = pos.coords.latitude
+		position.longitude = pos.coords.longitude
+		log "success to locate :",position.latitude," ",position.longitude
+		initLoad "Ajax/photos.json"
+	error = (e) ->
+		Alert "failed to get location"
+		initLoad "Ajax/photos.json"
+	if(navigator.geolocation) 
+		navigator.geolocation.getCurrentPosition(success,error)
+
+
+
+window.position = {latitude:-1,longitude:-1}
 window.id = 0
 window.onkeydown = ->
 	# log "onkeydown"
@@ -178,6 +224,6 @@ window.onkeydown = ->
 window.onresize = ->
 	# log "onresize"
 window.onload = ->
-	Ajax "Ajax/photos.json"
+	getPosition()
 window.onscroll = ->
 	scroll_to_load()

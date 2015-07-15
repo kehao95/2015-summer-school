@@ -331,22 +331,22 @@ body.loading .loading-gif {
   background-color: white;
 }
 #POP .commentBox{
-  height: 93%;
+  height: 92%;
   overflow: auto;
 }
 #POP .comment{
   width: 90%;
   padding-left: 5%;
   padding-top: 3%;
-  height: 17%;
+  height: auto;
   overflow: hidden;
 }
 .comment h1{
-  font-size: 2vw;
+  font-size: 1.9vw;
   color: #1976d2;
 }
 .comment p{
-  font-size: 1.1vw;
+  font-size: 1.7vw;
   color: black;
   padding: 3px;
 }
@@ -358,6 +358,7 @@ body.loading .loading-gif {
   float: bottom;
   color: black;
   height: 7%;
+  border: 0;
 
 }
 #POP .loadingGIF{
