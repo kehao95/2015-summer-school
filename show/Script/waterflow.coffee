@@ -79,7 +79,7 @@ loadPhoto =  ->
 				}})
 				`
 			else
-				content = "<p>无地理信息</p>"
+				content = ""
 
 
 

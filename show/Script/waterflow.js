@@ -99,7 +99,7 @@
 				}})
 				;
         } else {
-          content = "<p>无地理信息</p>";
+          content = "";
         }
       }
       img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
