@@ -51,15 +51,23 @@
   };
 
   loadPhoto = function() {
-    var col, colAppendPhoto, k, len, loadAddiction, loaded, onload, ref;
+    var col, colAppendPhoto, k, len, loadAddiction, loaded, ref;
+    loaded = function() {
+      $('.card').css("display", "inline-block");
+      $("body").css("overflow", "auto");
+      return loadAddiction();
+    };
     colAppendPhoto = function(col) {
       var card, cardcontent, content, img, imgsrc;
       if (id >= re.length - 1) {
+        Alert("loaded all");
         return;
       }
+      log("load");
       imgsrc = re[id]['tumb'];
       cardcontent = "";
       img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
+      img.bind('load', onload);
       if (cardcontent === !"") {
         content = $(document.createElement('div')).addClass('cardcontent').append($('<p />')).append(cardcontent);
       } else {
@@ -97,12 +105,8 @@
       }
       return results;
     };
-    onload = function() {};
-    loaded = function() {
-      $('.card').css("display", "inline-block");
-      return loadAddiction();
-    };
-    onload();
+    log("append columns");
+    $("body").css("overflow", "hidden");
     ref = $('.column');
     for (k = 0, len = ref.length; k < len; k++) {
       col = ref[k];
@@ -132,7 +136,7 @@
   };
 
   scroll_to_load = function() {
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 30) {
       return loadPhoto();
     }
   };

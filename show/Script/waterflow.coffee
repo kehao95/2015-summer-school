@@ -41,15 +41,22 @@ Ajax = (filename)->
 
 
 loadPhoto =  ->
+	loaded = ->
+			$('.card').css("display","inline-block")
+			$("body").css("overflow", "auto")
+			loadAddiction()
+
 	colAppendPhoto = (col) ->
 		# function to append a photo to a col
 		# log id+" in "+re.length
 		if id  >= re.length-1
-			# log "loaded ALL"
+			Alert "loaded all"
 			return 
+		log "load"
 		imgsrc= re[id]['tumb']
 		cardcontent = ""
 		img = $(document.createElement('div')).addClass('image').append( $('<img />').attr('src',imgsrc)).attr('alt','id')
+		img.bind('load',onload)
 		if cardcontent is not ""
 			content = $(document.createElement('div')).addClass('cardcontent').append( $('<p />')).append(cardcontent)
 		else
@@ -75,19 +82,10 @@ loadPhoto =  ->
 						loadI = true
 			if loadI
 				colAppendPhoto lastCards[i].parentNode
-	onload = ->
-			# log "onload"
-			#$('body').addClass("loading"); 
-			# log "onload done"
-	loaded = ->
-			## log "loaded"
 
-			$('.card').css("display","inline-block")
-			loadAddiction()
-			#$('body').removeClass("loading"); 
-			## log "loaded done"
-	onload()
-	# log "append columns"
+	# onload()
+	log "append columns"
+	$("body").css("overflow", "hidden")
 	for col in $('.column')
 		colAppendPhoto col
 	$('.columns').attr('onload',loaded)	
@@ -118,7 +116,7 @@ root.clickPOP = ->
 	$(document.getElementById('POP')).remove()
 
 scroll_to_load = ->
-	if($(window).scrollTop() + $(window).height() > $(document).height() - 50) 
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 30) 
        loadPhoto()
 
 
