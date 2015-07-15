@@ -27,7 +27,7 @@ Ajax = (filename)->
 			root.re.length = count
 			## log "loadPhoto()"
 			loadPhoto()
-			## log "loadPhoto() done"
+			loadPhoto()
 			loadPhoto()
 			loadPhoto()
 			# log "$(window).scrollTop():"+$(window).scrollTop()
@@ -49,7 +49,9 @@ loadPhoto =  ->
 	colAppendPhoto = (col) ->
 		# function to append a photo to a col
 		# log id+" in "+re.length
-		if id  >= re.length-1
+		foo = false
+		if id  >= re.length-1 and foo == false
+			foo = true
 			Alert "loaded all"
 			return 
 		log "load"
@@ -96,18 +98,56 @@ loadPhoto =  ->
 		
 clickcard= ->
 	# log "clickcard"
+	copyCardWithImage = (id) ->
+		card = $("##{id}").clone()
+		log card
+		img = card.find('img').attr('src',card.find('img').attr('src').replace("tumbnails","")).bind('load',onloadPOP)
+		card
+	newCommentBox = ->
+		return $(document.createElement('div')).addClass('commentBox')
+	newComments = ->
+		comments = $(document.createElement('div')).attr('id','comments')
+	newComment = (author,speach)->
+		comment = $(document.createElement('div')).addClass('comment')
+		a = $(document.createElement('h1')).append(author)
+		s = $(document.createElement('p')).append(speach)
+		return comment.append(a).append(s)
+	newLoadMore = ->
+		load = $(document.createElement('button')).attr('id','LoadMore').append("[获取更多]")
+		return load
 	onloadPOP = ->
 		log "onload"
 		log $('#POP').find('.card')
 		$('#POP').find('.card').css('opacity','1')
+	clickloadMore = (event)->
+		event.stopPropagation()
+		comment = newComment('kehao',"已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。")
+		$('.commentBox').append(comment)
+
+	loadCard =(id) ->
+		card = copyCardWithImage(id)
+		comment = newComment('kehao',"已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。")
+		commentBox = newCommentBox().append(comment).append(comment)
+		loadMore = newLoadMore()
+		comments = newComments().append(commentBox)
+		comments.append(loadMore)
+		card.append(comments)
+		POP.append(card)
+		document.getElementById('POP').addEventListener("click",clickPOP)
+		document.getElementById('LoadMore').addEventListener("click",clickloadMore)
+		document.getElementById('POP').onload = onloadPOP
+
+	loadingGIF =->
+		lo = document.createElement('div')
+		$(lo).addClass('loadingGIF')
+		gif = $(document.createElement('img')).attr('src','Images/loading.gif')
+		$(lo).append(gif).append('<p>正在努力加载中...</p>')
+		$('#POP').append(lo)
 
 	id = $(this).attr('id')
-	card = $("##{id}").clone()
-	img = card.find('img').attr('src',card.find('img').attr('src').replace("tumbnails","")).bind('load',onloadPOP)
-	POP = $(document.createElement('div')).attr('id','POP')
-	POP.append(card).appendTo($('body'))
-	document.getElementById('POP').addEventListener("click",clickPOP)
-	document.getElementById('POP').onload = onloadPOP
+	POP = $(document.createElement('div')).attr('id','POP').appendTo($('body'))
+	loadingGIF()
+	loadCard(id)
 	
 
 	# card.appendTo($('.column')[0])
@@ -116,7 +156,7 @@ root.clickPOP = ->
 	$(document.getElementById('POP')).remove()
 
 scroll_to_load = ->
-	if($(window).scrollTop() + $(window).height() > $(document).height() - 30) 
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 50) 
        loadPhoto()
 
 

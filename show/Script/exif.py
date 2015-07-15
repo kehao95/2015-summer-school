@@ -3,6 +3,7 @@ import os
 import json
 from PIL.ExifTags import TAGS, GPSTAGS
 from PIL import Image, ImageFile
+import shutil
 
 __all__ = ['fix_orientation']
 
@@ -129,22 +130,30 @@ def get_lat_lon(exif_data):
 def get_json_file(inpath,outpath,filename="photos.json"):
 	photoInfos={}
 	id  = 0
+	if savetumbs:
+		if os.path.exists(inpath+'/tumbnails'):
+			shutil.rmtree(inpath+'/tumbnails')
+		os.makedirs(inpath+'/tumbnails')
+
 	for root, dir, files in os.walk(inpath):
 		for photo in files:
-#			print root+'/'+photo
-			image = Image.open(root+'/'+photo)
-			exif_data = get_exif_data(image)
-			latitude ,longitude = get_lat_lon(exif_data)
-			photoInfos[id] = {"src":('Images/Photos/tumbnails/'+photo),'tumb':('Images/Photos/tumbnails/'+photo),'name':photo,'latitude':latitude,'longitude':longitude}
-			id+=1
-			fix_orientation(root+'/'+photo,True)
-			# savetumbs
-			if savetumbs:
-				basewidth = 300
-				wpercent = (basewidth / float(image.size[0]))
-				hsize = int((float(image.size[1]) * float(wpercent)))
-				img = image.resize((basewidth, hsize),Image.ANTIALIAS)
-				img.save(root+'/tumbnails/'+photo) 
+			if root == inpath:
+				#print 'root',root
+				#print 'photo',photo
+				image = Image.open(root+'/'+photo)
+				exif_data = get_exif_data(image)
+				latitude ,longitude = get_lat_lon(exif_data)
+				photoInfos[id] = {"src":('Images/Photos/'+photo),'tumb':('Images/Photos/tumbnails/'+photo),'name':photo,'latitude':latitude,'longitude':longitude}
+				id+=1
+				fix_orientation(root+'/'+photo,True)
+				# savetumbs
+				if savetumbs:
+					print photo
+					basewidth = 300
+					wpercent = (basewidth / float(image.size[0]))
+					hsize = int((float(image.size[1]) * float(wpercent)))
+					img = image.resize((basewidth, hsize),Image.ANTIALIAS)
+					img.save(root+'/tumbnails/'+photo) 
 
 	os.chdir(outpath)
 	with open(outpath+'/'+filename,'w') as f:
@@ -159,5 +168,3 @@ if __name__ == "__main__":
 	inpath ="/var/www/html/show/Images/Photos"
 	outpath  ="/var/www/html/show/Ajax"
 	get_json_file(inpath,outpath)
-
-

@@ -42,6 +42,7 @@
         loadPhoto();
         loadPhoto();
         loadPhoto();
+        loadPhoto();
         if ($(window).height() === $(document).height()) {
           return loadPhoto();
         }
@@ -58,8 +59,10 @@
       return loadAddiction();
     };
     colAppendPhoto = function(col) {
-      var card, cardcontent, content, img, imgsrc;
-      if (id >= re.length - 1) {
+      var card, cardcontent, content, foo, img, imgsrc;
+      foo = false;
+      if (id >= re.length - 1 && foo === false) {
+        foo = true;
         Alert("loaded all");
         return;
       }
@@ -116,19 +119,70 @@
   };
 
   clickcard = function() {
-    var POP, card, id, img, onloadPOP;
+    var POP, clickloadMore, copyCardWithImage, id, loadCard, loadingGIF, newComment, newCommentBox, newComments, newLoadMore, onloadPOP;
+    copyCardWithImage = function(id) {
+      var card, img;
+      card = $("#" + id).clone();
+      log(card);
+      img = card.find('img').attr('src', card.find('img').attr('src').replace("tumbnails", "")).bind('load', onloadPOP);
+      return card;
+    };
+    newCommentBox = function() {
+      return $(document.createElement('div')).addClass('commentBox');
+    };
+    newComments = function() {
+      var comments;
+      return comments = $(document.createElement('div')).attr('id', 'comments');
+    };
+    newComment = function(author, speach) {
+      var a, comment, s;
+      comment = $(document.createElement('div')).addClass('comment');
+      a = $(document.createElement('h1')).append(author);
+      s = $(document.createElement('p')).append(speach);
+      return comment.append(a).append(s);
+    };
+    newLoadMore = function() {
+      var load;
+      load = $(document.createElement('button')).attr('id', 'LoadMore').append("[获取更多]");
+      return load;
+    };
     onloadPOP = function() {
       log("onload");
       log($('#POP').find('.card'));
       return $('#POP').find('.card').css('opacity', '1');
     };
+    clickloadMore = function(event) {
+      var comment;
+      event.stopPropagation();
+      comment = newComment('kehao', "已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。");
+      return $('.commentBox').append(comment);
+    };
+    loadCard = function(id) {
+      var card, comment, commentBox, comments, loadMore;
+      card = copyCardWithImage(id);
+      comment = newComment('kehao', "已在现有的浏览器会话中创建新的窗口。已在现有的浏览器会话中创建新的窗口。");
+      commentBox = newCommentBox().append(comment).append(comment);
+      loadMore = newLoadMore();
+      comments = newComments().append(commentBox);
+      comments.append(loadMore);
+      card.append(comments);
+      POP.append(card);
+      document.getElementById('POP').addEventListener("click", clickPOP);
+      document.getElementById('LoadMore').addEventListener("click", clickloadMore);
+      return document.getElementById('POP').onload = onloadPOP;
+    };
+    loadingGIF = function() {
+      var gif, lo;
+      lo = document.createElement('div');
+      $(lo).addClass('loadingGIF');
+      gif = $(document.createElement('img')).attr('src', 'Images/loading.gif');
+      $(lo).append(gif).append('<p>正在努力加载中...</p>');
+      return $('#POP').append(lo);
+    };
     id = $(this).attr('id');
-    card = $("#" + id).clone();
-    img = card.find('img').attr('src', card.find('img').attr('src').replace("tumbnails", "")).bind('load', onloadPOP);
-    POP = $(document.createElement('div')).attr('id', 'POP');
-    POP.append(card).appendTo($('body'));
-    document.getElementById('POP').addEventListener("click", clickPOP);
-    return document.getElementById('POP').onload = onloadPOP;
+    POP = $(document.createElement('div')).attr('id', 'POP').appendTo($('body'));
+    loadingGIF();
+    return loadCard(id);
   };
 
   root.clickPOP = function() {
@@ -136,7 +190,7 @@
   };
 
   scroll_to_load = function() {
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 30) {
+    if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
       return loadPhoto();
     }
   };
