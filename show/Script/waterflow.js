@@ -92,7 +92,7 @@
       }
       img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
       img.bind('load', onload);
-      card = $(document.createElement('div')).addClass('card').append(img).append(content).attr('id', 'img_' + id).bind("click", clickcard);
+      card = $(document.createElement('div')).addClass('card').addClass('hvr-pulse-grow').append(img).append(content).attr('id', 'img_' + id).bind("click", clickcard);
       card.css("display", "none");
       card.appendTo(col);
       return id += 1;
@@ -142,6 +142,7 @@
       log(card);
       img = card.find('img').attr('src', card.find('img').attr('src').replace("tumbnails", "")).bind('load', onloadPOP);
       card.find('p').remove();
+      card.removeClass('hvr-pulse-grow');
       return card;
     };
     newCommentBox = function() {
