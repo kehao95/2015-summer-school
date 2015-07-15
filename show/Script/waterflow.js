@@ -116,6 +116,7 @@
     onloadPOP = function() {
       log("onload");
       log($('#POP').find('.card'));
+      $('#POP').find('.card').height($(window).height() * 0.8);
       return $('#POP').find('.card').css('opacity', '1');
     };
     id = $(this).attr('id');
