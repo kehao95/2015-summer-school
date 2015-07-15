@@ -107,22 +107,21 @@ nav .title {
   box-shadow:0 10px 50px 8px rgba(0, 153, 255, 0.4), 0 20px 77px 10px rgba(0, 153, 255, 0.22)
 }
 
-/* Pulse Grow */
-@-webkit-keyframes hvr-pulse-grow {
+@-webkit-keyframes up-down {
   to {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
 }
 
-@keyframes hvr-pulse-grow {
+@keyframes up-down {
   to {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
 }
 
-.hvr-pulse-grow {
+.up-down {
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: translateZ(0);
@@ -132,9 +131,9 @@ nav .title {
   backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
 }
-.hvr-pulse-grow:hover, .hvr-pulse-grow:focus, .hvr-pulse-grow:active {
-  -webkit-animation-name: hvr-pulse-grow;
-  animation-name: hvr-pulse-grow;
+.up-down:hover, .up-down:focus, .up-down:active {
+  -webkit-animation-name: up-down;
+  animation-name: up-down;
   -webkit-animation-duration: 0.5s;
   animation-duration: 0.5s;
   -webkit-animation-timing-function: linear;

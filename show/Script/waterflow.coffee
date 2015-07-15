@@ -66,14 +66,26 @@ loadPhoto =  ->
 		pos.latitude = re[id].latitude
 		pos.longitude = re[id].longitude
 		content= null
-		if position.getSuccess		
+		if position.getSuccess
 			if pos.longitude != null
 				content = "<p>距此 #{distence(pos,position).toFixed(1)}km</p>"
+				Url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{re[id].latitude},#{re[id].longitude}&sensor=true"
+				log "googleapi"
+				`
+				$.ajax({url:Url,dataType:'json',index:id,success:function(data){
+				log(data.status)
+				log(data.results[1].formatted_address)
+				$("#img_"+this.index).append("<p>"+data.results[1].formatted_address+"</p>")
+				}})
+				`
 			else
 				content = "<p>无地理信息</p>"
+
+
+
 		img = $(document.createElement('div')).addClass('image').append( $('<img />').attr('src',imgsrc)).attr('alt','id')
 		img.bind('load',onload)
-		card = $(document.createElement('div')).addClass('card').addClass('hvr-pulse-grow').append(img).append(content).attr('id','img_'+id).bind( "click", clickcard)
+		card = $(document.createElement('div')).addClass('card').addClass('up-down').append(img).append(content).attr('id','img_'+id).bind( "click", clickcard)
 		card.css("display","none")
 		card.appendTo(col)
 		id+=1
@@ -111,7 +123,7 @@ clickcard= ->
 		log card
 		img = card.find('img').attr('src',card.find('img').attr('src').replace("tumbnails","")).bind('load',onloadPOP)
 		card.find('p').remove()
-		card.removeClass('hvr-pulse-grow')
+		card.removeClass('up-down')
 		card
 	newCommentBox = ->
 		return $(document.createElement('div')).addClass('commentBox')
