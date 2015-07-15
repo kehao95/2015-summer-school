@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>柯豪的主页</title>
+    <link rel="stylesheet" href="Style/mine.css">
+    <link rel="stylesheet" href="Style/color.css">
+    <script src="Script/jquery.js"></script>
+    <script src="Script/mine.js" ></script>
+    <script src="Script/waterflow.js" ></script>
+    <script src="Script/data-columns.js" ></script>
+    <script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+  $('body').append("Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude)  
+}
+</script>
+  </head>
+  <body>
+    
+<p>Click the button to get your coordinates.</p>
+
+<button onclick="getLocation()">Try It</button>
+
+<p id="demo"></p>
+</body>
+</html>

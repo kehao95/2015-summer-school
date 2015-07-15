@@ -44,7 +44,7 @@ nav {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.326), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   top: 0;
   color: #fff;
-  z-index: 100;
+  z-index: 20;
 }
 
 nav .title {
@@ -284,7 +284,7 @@ body.loading .loading-gif {
   position: fixed;
   top:0;
   left:0;
-  z-index: 20;
+  z-index: 50;
   background-color: rgba(0, 0, 0, 0.8);
   text-align: center;
 }
@@ -293,19 +293,31 @@ body.loading .loading-gif {
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
-  z-index: -3;
   resize: both;
-  max-width: 80%;
-  max-height:80%;
+  width: 80%;
+  height:90%;
+  background-color: transparent;
 }
 #POP .image{
   display: inline-block;
-  max-width: 100%;
-  max-height: 100%
+  position:relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 80%;
+  height: 100%;
+  text-align: center;
+  opacity:1;
+  background-color: #000000;
+  padding: 3px;
 }
 #POP .image img{
   display: inline-block;
-  max-width: 100%;
+  width: auto;
+  height:auto;
   max-height:100%;
-  resize:auto;
+  max-width: 100%;
+  
+}
+#POP .comment{
+
 }

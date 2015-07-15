@@ -101,16 +101,12 @@ clickcard= ->
 	onloadPOP = ->
 		log "onload"
 		log $('#POP').find('.card')
-		$('#POP').find('.card').height($(window).height()* 0.8)
 		$('#POP').find('.card').css('opacity','1')
 
 	id = $(this).attr('id')
 	card = $("##{id}").clone()
-	img = card.find('img')
-	url = img.attr('src').replace("tumbnails","")
-	img.attr('src',url)
+	img = card.find('img').attr('src',card.find('img').attr('src').replace("tumbnails","")).bind('load',onloadPOP)
 	POP = $(document.createElement('div')).attr('id','POP')
-	img.bind('load',onloadPOP)
 	POP.append(card).appendTo($('body'))
 	document.getElementById('POP').addEventListener("click",clickPOP)
 	document.getElementById('POP').onload = onloadPOP
