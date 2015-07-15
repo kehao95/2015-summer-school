@@ -33,9 +33,6 @@ initLoad = (filename)->
 			loadPhoto()
 			loadPhoto()
 			loadPhoto()
-			# log "$(window).scrollTop():"+$(window).scrollTop()
-			# log "$(window).height():"+$(window).height()
-			# log "$(document).height():"+$(document).height()
 			if ($(window).height() == $(document).height())
 				# log "load to fill the screen"
 				loadPhoto()
@@ -68,10 +65,12 @@ loadPhoto =  ->
 		pos = {}
 		pos.latitude = re[id].latitude
 		pos.longitude = re[id].longitude
-		if pos.longitude != null
-			content = "<p>距此 #{distence(pos,position).toFixed(1)}km</p>"
-		else
-			content = "<p>无地理信息</p>"
+		content= null
+		if position.getSuccess		
+			if pos.longitude != null
+				content = "<p>距此 #{distence(pos,position).toFixed(1)}km</p>"
+			else
+				content = "<p>无地理信息</p>"
 		img = $(document.createElement('div')).addClass('image').append( $('<img />').attr('src',imgsrc)).attr('alt','id')
 		img.bind('load',onload)
 		card = $(document.createElement('div')).addClass('card').addClass('hvr-pulse-grow').append(img).append(content).attr('id','img_'+id).bind( "click", clickcard)
@@ -161,7 +160,7 @@ clickcard= ->
 	loadComments =->
 		success =(data,other...)->
 			if page >= 3
-				$('#LoadMore').text("[没有更多]")
+				$('#LoadMore').remove()
 				#document.getElementById('LoadMore').removeEventListener("click",clickloadMore)
 			i = 0
 			while data.hasOwnProperty(i)
@@ -207,17 +206,19 @@ getPosition = ->
 	success = (pos) ->
 		position.latitude = pos.coords.latitude
 		position.longitude = pos.coords.longitude
+		getSuccess= true
 		log "success to locate :",position.latitude," ",position.longitude
 		initLoad "Ajax/photos.json"
 	error = (e) ->
 		Alert "failed to get location"
 		initLoad "Ajax/photos.json"
+		getSuccess = false
 	if(navigator.geolocation) 
 		navigator.geolocation.getCurrentPosition(success,error)
 
 
 
-window.position = {latitude:-1,longitude:-1}
+window.position = {latitude:0,longitude:0,getSuccess:false}
 window.id = 0
 window.onkeydown = ->
 	# log "onkeydown"

@@ -85,10 +85,13 @@
       pos = {};
       pos.latitude = re[id].latitude;
       pos.longitude = re[id].longitude;
-      if (pos.longitude !== null) {
-        content = "<p>距此 " + (distence(pos, position).toFixed(1)) + "km</p>";
-      } else {
-        content = "<p>无地理信息</p>";
+      content = null;
+      if (position.getSuccess) {
+        if (pos.longitude !== null) {
+          content = "<p>距此 " + (distence(pos, position).toFixed(1)) + "km</p>";
+        } else {
+          content = "<p>无地理信息</p>";
+        }
       }
       img = $(document.createElement('div')).addClass('image').append($('<img />').attr('src', imgsrc)).attr('alt', 'id');
       img.bind('load', onload);
@@ -202,7 +205,7 @@
         var comment, data, i, other;
         data = arguments[0], other = 2 <= arguments.length ? slice.call(arguments, 1) : [];
         if (page >= 3) {
-          $('#LoadMore').text("[没有更多]");
+          $('#LoadMore').remove();
         }
         i = 0;
         while (data.hasOwnProperty(i)) {
@@ -255,14 +258,18 @@
   getPosition = function() {
     var error, success;
     success = function(pos) {
+      var getSuccess;
       position.latitude = pos.coords.latitude;
       position.longitude = pos.coords.longitude;
+      getSuccess = true;
       log("success to locate :", position.latitude, " ", position.longitude);
       return initLoad("Ajax/photos.json");
     };
     error = function(e) {
+      var getSuccess;
       Alert("failed to get location");
-      return initLoad("Ajax/photos.json");
+      initLoad("Ajax/photos.json");
+      return getSuccess = false;
     };
     if (navigator.geolocation) {
       return navigator.geolocation.getCurrentPosition(success, error);
@@ -270,8 +277,9 @@
   };
 
   window.position = {
-    latitude: -1,
-    longitude: -1
+    latitude: 0,
+    longitude: 0,
+    getSuccess: false
   };
 
   window.id = 0;
