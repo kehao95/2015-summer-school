@@ -258,18 +258,16 @@
   getPosition = function() {
     var error, success;
     success = function(pos) {
-      var getSuccess;
       position.latitude = pos.coords.latitude;
       position.longitude = pos.coords.longitude;
-      getSuccess = true;
+      position.getSuccess = true;
       log("success to locate :", position.latitude, " ", position.longitude);
       return initLoad("Ajax/photos.json");
     };
     error = function(e) {
-      var getSuccess;
       Alert("failed to get location");
       initLoad("Ajax/photos.json");
-      return getSuccess = false;
+      return position.getSuccess = false;
     };
     if (navigator.geolocation) {
       return navigator.geolocation.getCurrentPosition(success, error);

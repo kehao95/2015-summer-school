@@ -206,13 +206,13 @@ getPosition = ->
 	success = (pos) ->
 		position.latitude = pos.coords.latitude
 		position.longitude = pos.coords.longitude
-		getSuccess= true
+		position.getSuccess= true
 		log "success to locate :",position.latitude," ",position.longitude
 		initLoad "Ajax/photos.json"
 	error = (e) ->
 		Alert "failed to get location"
 		initLoad "Ajax/photos.json"
-		getSuccess = false
+		position.getSuccess = false
 	if(navigator.geolocation) 
 		navigator.geolocation.getCurrentPosition(success,error)
 
