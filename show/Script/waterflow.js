@@ -95,8 +95,8 @@
 				$.ajax({url:Url,dataType:'json',index:id,success:function(data){
 				log(data.status)
 				log(data.results[1].formatted_address)
-				addr = data.results[1].formatted_address
-				$("#img_"+this.index).append("<p>"+data.results[1].formatted_address+"</p>")
+				addr = data.results[1].formatted_address.replace(" .*","")
+				$("#img_"+this.index).append("<p>"+addr+"</p>")
 				}})
 				;
         } else {
@@ -275,12 +275,16 @@
       return initLoad("Ajax/photos.json");
     };
     error = function(e) {
-      Alert("failed to get location");
-      initLoad("Ajax/photos.json");
-      return position.getSuccess = false;
+      Alert("failed to get location set at Tsinghua as defult");
+      position.latitude = 40.009624;
+      position.longitude = 116.325859;
+      position.getSuccess = true;
+      return initLoad("Ajax/photos.json");
     };
     if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(success, error);
+      return navigator.geolocation.getCurrentPosition(success, error, {
+        timeout: 800
+      });
     }
   };
 

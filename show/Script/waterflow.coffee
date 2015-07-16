@@ -75,8 +75,8 @@ loadPhoto =  ->
 				$.ajax({url:Url,dataType:'json',index:id,success:function(data){
 				log(data.status)
 				log(data.results[1].formatted_address)
-				addr = data.results[1].formatted_address
-				$("#img_"+this.index).append("<p>"+data.results[1].formatted_address+"</p>")
+				addr = data.results[1].formatted_address.replace(" .*","")
+				$("#img_"+this.index).append("<p>"+addr+"</p>")
 				}})
 				`
 			else
@@ -223,11 +223,13 @@ getPosition = ->
 		log "success to locate :",position.latitude," ",position.longitude
 		initLoad "Ajax/photos.json"
 	error = (e) ->
-		Alert "failed to get location"
+		Alert "failed to get location set at Tsinghua as defult"
+		position.latitude = 40.009624
+		position.longitude =  116.325859
+		position.getSuccess = true
 		initLoad "Ajax/photos.json"
-		position.getSuccess = false
 	if(navigator.geolocation) 
-		navigator.geolocation.getCurrentPosition(success,error)
+		navigator.geolocation.getCurrentPosition(success,error,{timeout:800})
 
 
 
