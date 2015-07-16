@@ -255,7 +255,7 @@ nav .title{
 .card p {
   color: black;
   text-align: center;
-  font-size: 23px;
+  font-size: 2vw;
 }
 .card .action {
   border-top: 1px solid rgba(160, 160, 160, 0.2);

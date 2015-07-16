@@ -275,12 +275,16 @@
       return initLoad("Ajax/photos.json");
     };
     error = function(e) {
-      Alert("failed to get location");
-      initLoad("Ajax/photos.json");
-      return position.getSuccess = false;
+      Alert("failed to get location set at Tsinghua as defult");
+      position.latitude = 40.009624;
+      position.longitude = 116.325859;
+      position.getSuccess = true;
+      return initLoad("Ajax/photos.json");
     };
     if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(success, error);
+      return navigator.geolocation.getCurrentPosition(success, error, {
+        timeout: 800
+      });
     }
   };
 

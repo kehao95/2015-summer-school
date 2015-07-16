@@ -223,11 +223,13 @@ getPosition = ->
 		log "success to locate :",position.latitude," ",position.longitude
 		initLoad "Ajax/photos.json"
 	error = (e) ->
-		Alert "failed to get location"
+		Alert "failed to get location set at Tsinghua as defult"
+		position.latitude = 40.009624
+		position.longitude =  116.325859
+		position.getSuccess = true
 		initLoad "Ajax/photos.json"
-		position.getSuccess = false
 	if(navigator.geolocation) 
-		navigator.geolocation.getCurrentPosition(success,error)
+		navigator.geolocation.getCurrentPosition(success,error,{timeout:800})
 
 
 
