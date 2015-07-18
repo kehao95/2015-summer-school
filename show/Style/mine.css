@@ -255,7 +255,11 @@ nav .title{
 .card p {
   color: black;
   text-align: center;
+<<<<<<< HEAD
   font-size: 1.5vw;
+=======
+  font-size: 2vw;
+>>>>>>> ffd09fae6be60a2fe33af8d56a9127852313f6d4
 }
 .card .action {
   border-top: 1px solid rgba(160, 160, 160, 0.2);
