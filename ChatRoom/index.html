@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src="Script/firebase.js"></script>
+    <script src='Script/jquery.js'></script>
+    
+    <link rel="stylesheet" href="Style/chat.css">
+    <script src="Script/ChatRoom.js"></script>
+    <script src="Script/idle.js"></script>
+  </head>
+  <body>
+    <div class="l-demo-container">
+      <div class="chat">
+      <header>Chatting Room</header>
+      <div class='chat-toolbar'>
+        <label for="nameInput">Username:</label>
+        <input type='text' id='nameInput' placeholder='enter a username...'>
+      </div>
+      <div class="cols">
+        <div class="left">
+          <ul id='messages' class="chat-messages"></ul>
+        </div>
+        <div class="right">
+          <div id="onlineUsers"></div>
+        </div>
+      </div>
+    <footer>
+      <input type='text' id='messageInput'  placeholder='Type a message...'>
+    </footer>
+  </div>
+</div>
+<!-- 
+<div id="log"></div>
+-->
+</body>
+</html>
